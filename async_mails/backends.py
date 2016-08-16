@@ -19,14 +19,13 @@ class AsyncEmailBackend(BaseEmailBackend):
             if html is None:
                 html = message.body
 
-            print(message.from_email)
             message_dict.update({
-                "mail_from": ('Sydney Bristow', message.from_email),
+                "mail_from": message.from_email,
                 "mail_to": message.to,
                 "subject": message.subject,
                 "html": html,
                 "text": message.body,
-                "attachments": []
+                "attachments": [],
             })
 
             for attachment in message.attachments:
