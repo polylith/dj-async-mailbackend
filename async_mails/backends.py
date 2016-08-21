@@ -22,6 +22,8 @@ class AsyncEmailBackend(BaseEmailBackend):
             message_dict.update({
                 "mail_from": message.from_email,
                 "mail_to": message.to,
+                "cc": message.cc,
+                "bcc": message.bcc,
                 "subject": message.subject,
                 "html": html,
                 "text": message.body,
