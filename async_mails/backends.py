@@ -29,9 +29,13 @@ class AsyncEmailBackend(BaseEmailBackend):
                 "text": message.body,
                 "attachments": [],
             })
-
+            print(message.attachments)
             for attachment in message.attachments:
+                inline = False
                 if isinstance(attachment, MIMEBase):
+                    content_disposition = attachment.get("Content-Disposition")
+                    inline = content_disposition == "inline"
+
                     filename = attachment.get_filename('')
                     binary_contents = attachment.get_payload(decode=True)
                     mimetype = attachment.get_content_type()
@@ -39,7 +43,7 @@ class AsyncEmailBackend(BaseEmailBackend):
                     filename, binary_contents, mimetype = attachment
 
                 content = base64.b64encode(binary_contents).decode('ascii')
-                message_dict['attachments'].append((filename, content, mimetype))
+                message_dict['attachments'].append((filename, content, mimetype, inline))
 
             # Send task to Celery Worker
             celery.send_task(
