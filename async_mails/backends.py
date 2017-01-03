@@ -1,4 +1,5 @@
 import base64
+import uuid
 from collections import OrderedDict
 from email.mime.base import MIMEBase
 import os
@@ -34,9 +35,11 @@ class AsyncEmailBackend(BaseEmailBackend):
                 inline = False
                 if isinstance(attachment, MIMEBase):
                     content_disposition = attachment.get("Content-Disposition")
+                    content_id = attachment.get("Content-ID", str(uuid.uuid4()))
+
                     inline = content_disposition == "inline"
 
-                    filename = attachment.get_filename('')
+                    filename = content_id
                     binary_contents = attachment.get_payload(decode=True)
                     mimetype = attachment.get_content_type()
                 else:
