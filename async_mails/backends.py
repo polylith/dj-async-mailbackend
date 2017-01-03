@@ -35,7 +35,7 @@ class AsyncEmailBackend(BaseEmailBackend):
                 inline = False
                 if isinstance(attachment, MIMEBase):
                     content_disposition = attachment.get("Content-Disposition")
-                    content_id = attachment.get("Content-ID", str(uuid.uuid4()))
+                    content_id = attachment.get("Content-ID", str(uuid.uuid4())).replace("<", "").replace(">", "")
 
                     inline = content_disposition == "inline"
 
