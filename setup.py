@@ -2,7 +2,7 @@ from distutils.core import setup
 
 setup(
     name='dj-async-mailbackend',
-    version='1.2.0',
+    version='1.3.0',
     packages=['async_mails', 'async_mails.migrations'],
     url='http://polylith.de/',
     license='MIT',

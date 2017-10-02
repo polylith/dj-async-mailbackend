@@ -20,6 +20,8 @@ class AsyncEmailBackend(BaseEmailBackend):
             if html is None:
                 html = message.body
 
+            trace_id = message.extra_headers.get("TRACE_ID", None)
+
             message_dict.update({
                 "mail_from": message.from_email,
                 "mail_to": message.to,
@@ -29,6 +31,7 @@ class AsyncEmailBackend(BaseEmailBackend):
                 "html": html,
                 "text": message.body,
                 "attachments": [],
+                "trace_id": trace_id
             })
             print(message.attachments)
             for attachment in message.attachments:
